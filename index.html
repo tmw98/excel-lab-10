@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Excel Lab — Kelas 10</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#687386;--primary:#2563eb;--primary2:#1d4ed8;--ok:#15803d;--bad:#dc2626;--line:#dce2ec}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#172554,#2563eb);color:#fff;padding:28px 20px}header .wrap{max-width:1100px;margin:auto}
+h1{margin:0 0 7px;font-size:30px}.subtitle{opacity:.9}.wrap{max-width:1100px;margin:auto;padding:20px}
+nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:5}.nav{max-width:1100px;margin:auto;display:flex;gap:7px;padding:8px 20px;overflow:auto}
+button,.tab{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer}.tab{background:#eef2f7;color:#334155}.tab.active{background:var(--primary);color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px;margin:16px 0;box-shadow:0 5px 18px #1720330a}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}.lesson{border:1px solid var(--line);border-radius:12px;padding:16px}.lesson h3{margin-top:0}
+.primary{background:var(--primary);color:#fff}.secondary{background:#e9eef7;color:#1e293b}.danger{background:#fee2e2;color:#991b1b}
+input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}label{display:block;font-weight:700;margin:10px 0 6px}
+.code{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:9px;font-family:ui-monospace,monospace;overflow:auto}
+.note{padding:12px;border-left:4px solid var(--primary);background:#eff6ff;border-radius:6px}.result{margin-top:10px;font-weight:700}.ok{color:var(--ok)}.bad{color:var(--bad)}
+.sheet{overflow:auto}.sheet table{border-collapse:collapse;background:#fff}.sheet th,.sheet td{border:1px solid #cbd5e1;min-width:105px;height:40px;padding:6px}.sheet th{background:#f1f5f9}.cell{width:100%;border:0;outline:0;font:inherit;background:transparent}.cell:focus{background:#eff6ff}
+.progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--primary);width:0}
+.badge{display:inline-block;background:#dbeafe;color:#1d4ed8;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:800}
+.small{font-size:13px;color:var(--muted)}.score{font-size:34px;font-weight:900}.hidden{display:none}
+.question{padding:15px;border:1px solid var(--line);border-radius:10px;margin:12px 0}.question input{max-width:450px}
+@media(max-width:600px){h1{font-size:25px}.wrap{padding:14px}.card{padding:15px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Excel Lab — Kelas 10</h1>
+<div class="subtitle">Belajar → Praktik → Uji → Retensi. Prototype LMS Excel untuk SMA Terbuka.</div>
+</div></header>
+<nav><div class="nav">
+<button class="tab active" data-page="home">Beranda</button>
+<button class="tab" data-page="materi5">Materi 5 · Formula</button>
+<button class="tab" data-page="materi6">Materi 6 · Fungsi</button>
+<button class="tab" data-page="praktik">Praktik</button>
+<button class="tab" data-page="kuis">Kuis</button>
+<button class="tab" data-page="retensi">Retensi</button>
+</div></nav>
+
+<main class="wrap">
+<section id="home" class="page">
+<div class="card">
+<span class="badge">PROTOTYPE</span>
+<h2>Belajar Excel secara bertahap</h2>
+<p>Target: mampu membuat formula dasar dan menggunakan fungsi dasar untuk menyelesaikan persoalan sederhana.</p>
+<div class="progress"><div id="overallBar" class="bar"></div></div>
+<p id="overallText" class="small">Progress 0%</p>
+</div>
+<div class="grid">
+<div class="lesson"><h3>Materi 5</h3><p>Formula dasar, operator, referensi cell, relative & absolute reference.</p><button class="primary" onclick="showPage('materi5')">Mulai</button></div>
+<div class="lesson"><h3>Materi 6</h3><p>SUM, AVERAGE, MAX, MIN, COUNT dan penerapannya.</p><button class="primary" onclick="showPage('materi6')">Mulai</button></div>
+<div class="lesson"><h3>Praktik</h3><p>Gunakan spreadsheet simulasi dan selesaikan tugas dengan formula.</p><button class="primary" onclick="showPage('praktik')">Praktik</button></div>
+<div class="lesson"><h3>Retensi</h3><p>Uji kembali kemampuan setelah jeda. Data tersimpan di browser.</p><button class="primary" onclick="showPage('retensi')">Cek retensi</button></div>
+</div>
+</section>
+
+<section id="materi5" class="page hidden">
+<div class="card"><span class="badge">MATERI 5</span><h2>Formula Dasar</h2>
+<p>Formula adalah instruksi yang digunakan Excel untuk melakukan perhitungan. Formula umumnya diawali tanda <b>=</b>.</p>
+<div class="code">=B2+C2<br>=B2-C2<br>=B2*C2<br>=B2/C2</div>
+<div class="note"><b>Ingat:</b> gunakan referensi cell agar perhitungan otomatis mengikuti data.</div>
+<h3>Relative vs Absolute Reference</h3>
+<p><b>Relative:</b> <code>=B2*C2</code> berubah ketika disalin ke baris berikutnya.</p>
+<p><b>Absolute:</b> <code>=B2*$F$1</code> mempertahankan F1 ketika formula disalin.</p>
+<button class="primary" onclick="complete('m5');showPage('praktik')">Saya sudah mempelajari materi</button>
+</div></section>
+
+<section id="materi6" class="page hidden">
+<div class="card"><span class="badge">MATERI 6</span><h2>Fungsi Excel Dasar</h2>
+<p>Fungsi adalah formula siap pakai untuk melakukan pekerjaan tertentu.</p>
+<div class="grid">
+<div class="lesson"><h3>SUM</h3><div class="code">=SUM(B2:B10)</div><p>Menjumlahkan angka.</p></div>
+<div class="lesson"><h3>AVERAGE</h3><div class="code">=AVERAGE(B2:B10)</div><p>Menghitung rata-rata.</p></div>
+<div class="lesson"><h3>MAX</h3><div class="code">=MAX(B2:B10)</div><p>Mencari nilai terbesar.</p></div>
+<div class="lesson"><h3>MIN</h3><div class="code">=MIN(B2:B10)</div><p>Mencari nilai terkecil.</p></div>
+<div class="lesson"><h3>COUNT</h3><div class="code">=COUNT(B2:B10)</div><p>Menghitung jumlah cell berisi angka.</p></div>
+</div>
+<button class="primary" onclick="complete('m6');showPage('kuis')">Saya sudah mempelajari materi</button>
+</div></section>
+
+<section id="praktik" class="page hidden">
+<div class="card"><span class="badge">PRAKTIK</span><h2>Spreadsheet Simulator</h2>
+<p>Isi kolom Total dengan formula <b>Harga × Jumlah</b>. Jangan mengetik hasil akhirnya.</p>
+<div class="sheet"><table><thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+<tbody>
+<tr><th>1</th><td>Barang</td><td>Harga</td><td>Jumlah</td><td>Total</td></tr>
+<tr><th>2</th><td>Buku</td><td>5000</td><td>3</td><td><input class="cell" id="d2" placeholder="formula..."></td></tr>
+<tr><th>3</th><td>Pensil</td><td>2000</td><td>5</td><td><input class="cell" id="d3" placeholder="formula..."></td></tr>
+<tr><th>4</th><td>Penghapus</td><td>1500</td><td>4</td><td><input class="cell" id="d4" placeholder="formula..."></td></tr>
+</tbody></table></div>
+<br><button class="primary" onclick="checkPractice()">Periksa Praktik</button>
+<div id="practiceResult" class="result"></div>
+</div>
+<div class="card">
+<h3>Latihan fungsi</h3>
+<p>Gunakan fungsi <b>SUM</b> untuk menjumlahkan seluruh Total pada D2:D4.</p>
+<label>Formula</label><input id="sumAnswer" placeholder="contoh: =SUM(D2:D4)">
+<button class="primary" onclick="checkSum()">Periksa</button>
+<div id="sumResult" class="result"></div>
+</div>
+</section>
+
+<section id="kuis" class="page hidden">
+<div class="card"><span class="badge">KUIS</span><h2>Uji Pemahaman</h2>
+<div class="question"><b>1. Formula mana yang benar untuk menjumlahkan B2 dan C2?</b><label><input name="q1" type="radio" value="a"> =B2+C2</label><label><input name="q1" type="radio" value="b"> B2+C2</label><label><input name="q1" type="radio" value="c"> =SUM(B2,C2,C3)</label></div>
+<div class="question"><b>2. Fungsi apa yang digunakan untuk mencari rata-rata?</b><input id="q2" placeholder="Nama fungsi"></div>
+<div class="question"><b>3. Fungsi apa yang digunakan untuk mencari nilai terbesar?</b><input id="q3" placeholder="Nama fungsi"></div>
+<div class="question"><b>4. Jika B2=10 dan C2=4, formula untuk perkalian adalah?</b><input id="q4" placeholder="Formula"></div>
+<button class="primary" onclick="gradeQuiz()">Nilai Kuis</button>
+<div id="quizResult" class="result"></div>
+</div>
+</section>
+
+<section id="retensi" class="page hidden">
+<div class="card"><span class="badge">RETENSI</span><h2>Retention Check</h2>
+<p>Ujian singkat ini dirancang untuk mengecek apakah konsep masih dapat digunakan kembali setelah belajar.</p>
+<div class="question"><b>1. Apa fungsi SUM?</b><input id="r1" placeholder="Jawaban singkat"></div>
+<div class="question"><b>2. Tulis formula untuk menghitung A2 × B2.</b><input id="r2" placeholder="Formula"></div>
+<div class="question"><b>3. Apa fungsi MAX?</b><input id="r3" placeholder="Jawaban singkat"></div>
+<button class="primary" onclick="gradeRetention()">Nilai Retensi</button>
+<div id="retentionResult" class="result"></div>
+<hr>
+<h3>Riwayat</h3><div id="history"></div>
+</div></section>
+</main>
+
+<script>
+const KEY='excelLabK10';
+let state=JSON.parse(localStorage.getItem(KEY)||'{"done":{},"quiz":null,"retention":[]}');
+function save(){localStorage.setItem(KEY,JSON.stringify(state));updateProgress();renderHistory()}
+function complete(x){state.done[x]=true;save()}
+function showPage(id){
+ document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>showPage(x.dataset.page));
+function updateProgress(){
+ let n=Object.keys(state.done).filter(k=>state.done[k]).length;
+ let pct=Math.round(n/2*100);
+ if(state.quiz) pct=Math.min(100,pct+20);
+ if(state.retention.length) pct=Math.min(100,pct+20);
+ document.getElementById('overallBar').style.width=pct+'%';
+ document.getElementById('overallText').textContent='Progress '+pct+'%';
+}
+function norm(s){return String(s||'').trim().toUpperCase().replace(/\s+/g,'')}
+function checkPractice(){
+ let expected=['=B2*C2','=B3*C3','=B4*C4'], ids=['d2','d3','d4'], ok=0;
+ ids.forEach((id,i)=>{if(norm(document.getElementById(id).value)===expected[i])ok++});
+ let el=document.getElementById('practiceResult');
+ el.className='result '+(ok===3?'ok':'bad');
+ el.textContent=ok===3?'Benar! Semua formula tepat.':'Benar '+ok+'/3. Periksa referensi cell dan operator perkalian.';
+ if(ok===3)complete('practice');
+}
+function checkSum(){
+ let v=norm(document.getElementById('sumAnswer').value),el=document.getElementById('sumResult');
+ let ok=['=SUM(D2:D4)','=SUM(D2;D4)'].includes(v);
+ el.className='result '+(ok?'ok':'bad');el.textContent=ok?'Benar! SUM digunakan dengan tepat.':'Belum tepat. Coba gunakan =SUM(D2:D4).';
+ if(ok)complete('sum');
+}
+function gradeQuiz(){
+ let score=0;
+ if(document.querySelector('input[name=q1]:checked')?.value==='a')score++;
+ if(norm(document.getElementById('q2').value)==='AVERAGE')score++;
+ if(norm(document.getElementById('q3').value)==='MAX')score++;
+ if(norm(document.getElementById('q4').value)==='=B2*C2')score++;
+ let pct=score*25;state.quiz=pct;save();
+ let el=document.getElementById('quizResult');el.className='result '+(pct>=75?'ok':'bad');el.innerHTML=`Skor: <span class="score">${pct}</span>/100 — ${pct>=75?'Kompeten untuk lanjut.':'Pelajari kembali materi lalu coba lagi.'}`;
+}
+function gradeRetention(){
+ let score=0;
+ if(norm(document.getElementById('r1').value).includes('JUMLAH'))score++;
+ if(norm(document.getElementById('r2').value)==='=A2*B2')score++;
+ if(norm(document.getElementById('r3').value).includes('TERBESAR'))score++;
+ let pct=Math.round(score/3*100);state.retention.push({date:new Date().toLocaleString('id-ID'),score:pct});save();
+ let el=document.getElementById('retentionResult');el.className='result '+(pct>=75?'ok':'bad');el.innerHTML=`Skor retensi: <span class="score">${pct}</span>/100`;
+}
+function renderHistory(){
+ let h=document.getElementById('history');if(!h)return;
+ h.innerHTML=state.retention.length?state.retention.slice(-5).reverse().map(x=>`<p><b>${x.score}/100</b> <span class="small">${x.date}</span></p>`).join(''):'Belum ada hasil retensi.';
+}
+updateProgress();renderHistory();
+</script>
+</body>
+</html>
